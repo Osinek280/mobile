@@ -19,3 +19,27 @@ jobs:
 
       - name: Check Flutter version
         run: flutter --version
+      
+      # Krok 3: Weryfikacja wersji
+      - name: Check Flutter version
+        run: flutter --version
+
+      # Krok 4: Instalacja zależności
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Krok 5: Budowanie APK
+      - name: Build release APK
+        run: flutter build apk --release
+
+      # Krok 6: Tworzenie GitHub Release i upload APK
+      - name: Create Release and Upload APK
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v$(date +%Y.%m.%d.%H%M)
+          name: "Build $(date +%Y-%m-%d)"
+          body: "Automatic release from GitHub Actions"
+          files: |
+            build/app/outputs/flutter-apk/app-release.apk
+          draft: false
+          prerelease: false
