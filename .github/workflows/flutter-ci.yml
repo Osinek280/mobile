@@ -1,50 +1,24 @@
 name: Flutter CI/CD
 
-on: push
+on:
+  push:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: 'stable'
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Run tests
-        run: flutter test
-
-      - name: Build Android AAB
-        run: flutter build appbundle --release
-        if: runner.os == 'Linux'
-
-      - name: Upload Android Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: app-release
-          path: build/app/outputs/bundle/release/app-release.aab
-
-  deploy-ios:
-    runs-on: macos-latest
-    needs: build
+    container:
+      image: google/dart:latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Clone repository
+        uses: actions/checkout@v4
 
-      - name: Setup Flutter
+      - name: Set up Flutter
         uses: subosito/flutter-action@v2
-
-      - name: Build iOS IPA
-        run: flutter build ipa --release --export-options-plist=ios/ExportOptions.plist
-
-      - name: Upload iOS Artifact
-        uses: actions/upload-artifact@v3
         with:
-          name: app-ipa
-          path: build/ios/ipa/YourApp.ipa
+          channel: stable
+          flutter-version: 3.19.0
+
+      - name: Check Flutter version
+        run: flutter --version
