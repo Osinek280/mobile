@@ -8,21 +8,21 @@ jobs:
     name: Build & Release
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4  # Użyj najnowszej wersji checkout
+      - uses: actions/setup-java@v3  # Zaktualizowana wersja Java
         with:
-          java-version: '12.x'
-      - uses: subosito/flutter-action@v2
+          distribution: 'zulu'  # Lepsza kompatybilność z Flutter
+          java-version: '17'  # Flutter zaleca JDK 17+
+      - uses: subosito/flutter-action@v2  # Nowa wersja Flutter Action
         with:
-          flutter-version: '3.32.4'
-          channel: 'stable'
+          flutter-version: '3.32.4'  # Ta sama wersja, co lokalnie
+          channel: 'stable'  # Stabilna wersja
       - run: flutter pub get
       - run: flutter test
-      - run: flutter build apk --debug --split-per-abi
+      - run: flutter build apk --release --split-per-abi  # Lepiej budować wersję release
       - name: Push to Releases
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/app/outputs/apk/debug/*"
+          artifacts: "build/app/outputs/apk/release/*"  # Zmień ścieżkę na release
           tag: v1.0.${{ github.run_number }}
-          token: ${{ secrets.TOKEN }}
-      
+          token: ${{ secrets.GITHUB_TOKEN }}  # Użyj domyślnego tokena
