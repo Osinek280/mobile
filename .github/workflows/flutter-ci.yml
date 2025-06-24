@@ -19,26 +19,28 @@ jobs:
           flutter-version: 3.19.0
 
       - name: Check Flutter version
-        run: flutter --version
+        run: flutter pub get
+      - run: pod repo update
+        working-directory: ios
 
-  node-tests:
-    name: Test Node on ${{ matrix.node_version }} / ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        node_version: ['18.x', '20.x']
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+      - run: flutter build ios --release --no-codesign
 
-    steps:
-      - uses: actions/checkout@v4
+      - run: mkdir Payload
+        working-directory: build/ios/iphoneos
 
-      - name: Use Node.js ${{ matrix.node_version }}
-        uses: actions/setup-node@v4
+      - run: mv Runner.app/ Payload
+        working-directory: build/ios/iphoneos
+
+      - name: Zip output
+        run: zip -qq -r -9 FlutterIpaExport.ipa Payload
+        working-directory: build/ios/iphoneos
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
         with:
-          node-version: ${{ matrix.node_version }}
-
-      - name: npm install, build and test
-        run: |
-          npm install
-          npm run build --if-present
-          npm test
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/ios/iphoneos/FlutterIpaExport.ipa
+          tag: v2.0
+          overwrite: true
+          body: "This is first release"
+      
