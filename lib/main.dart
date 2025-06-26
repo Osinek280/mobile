@@ -1,3 +1,5 @@
+import 'package:edumate/pages/home.dart';
+import 'package:edumate/pages/login.dart';
 import 'package:flutter/material.dart';
 
 const _fontFamily = 'SF Pro Text'; // dodaj do pubspec.yaml i assets/fonts
@@ -6,33 +8,36 @@ final lightTheme = ThemeData(
   brightness: Brightness.light,
   colorScheme: const ColorScheme(
     brightness: Brightness.light,
-    primary: Color(0xFF007AFF),
-    onPrimary: Color(0xFFFFFFFF),
-    secondary: Color(0xFFD7D7D7),
-    onSecondary: Color(0xFF131313),
-    error: Color(0xFFD9534F),
-    onError: Color(0xFFFFFFFF),
-    surface: Color(0xFFF6F6F6),
-    onSurface: Color(0xFF131313), // dawny onBackground
+    primary: Color(0xFF007AFF), // Primary
+    onPrimary: Color(0xFFFFFFFF), // Tekst na Primary
+    secondary: Color(0xFFD7D7D7), // Body - Secondary
+    onSecondary: Color(0xFF131313), // Założyłem czarny tekst
+    error: Color(0xFFD53F36), // Error
+    onError: Color(0xFFFFFFFF), // Tekst na Error
+    background: Color(0xFFFFFFFF), // Bg
+    onBackground: Color(0xFF131313), // Body - Primary
+    surface: Color(0xFFF8F8F8), // Surfaces - szary
+    onSurface: Color(0xFF131313), // Tekst na surface
   ),
-  scaffoldBackgroundColor: Color(0xFFFFFFFF), // Bg
-  dividerColor: Color(0xFFF2F2F2),
+  scaffoldBackgroundColor: Color(0xFFFFFFFF), // BG
+  dividerColor: Color(0xFFF2F2F2), // Border & Divider
 );
+
 final darkTheme = ThemeData(
   brightness: Brightness.dark,
   colorScheme: const ColorScheme(
     brightness: Brightness.dark,
-    primary: Color(0xFF007AFF),
-    onPrimary: Color(0xFFFFFFFF),
-    secondary: Color(0xFF4C4C4C),
-    onSecondary: Color(0xFFFFFFFF),
-    error: Color(0xFFD9534F),
-    onError: Color(0xFFFFFFFF),
-    surface: Color(0xFF00254D),
-    onSurface: Color(0xFFFFFFFF), // dawny onBackground
+    primary: Color(0xFF007AFF), // Primary
+    onPrimary: Color(0xFFFFFFFF), // Tekst na Primary
+    secondary: Color(0xFF4C4C4C), // Body - Secondary
+    onSecondary: Color(0xFFFFFFFF), // Tekst na Secondary
+    error: Color(0xFFD53F36), // Error
+    onError: Color(0xFFFFFFFF), // Tekst na Error
+    surface: Color(0xFF262626), // Surface główny (ciemny)
+    onSurface: Color(0xFFFFFFFF), // Tekst na Surface
   ),
-  scaffoldBackgroundColor: Color(0xFF131313), // Bg
-  dividerColor: Color(0xFF393939),
+  scaffoldBackgroundColor: Color(0xFF131313), // BG - tło aplikacji
+  dividerColor: Color(0xFF393939), // Border & Divider
 );
 
 final TextTheme customTextTheme = TextTheme(
@@ -167,105 +172,12 @@ class MyApp extends StatelessWidget {
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
       ),
-      home: const LanguageLearningScreen(),
-    );
-  }
-}
-
-class LanguageLearningScreen extends StatelessWidget {
-  const LanguageLearningScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          // padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Speaker.',
-                style: textTheme.displaySmall?.copyWith(
-                  color: Colors.black,
-                ), // 24/32 headlineSmall
-              ),
-              const SizedBox(height: 40),
-              Center(child: Image.asset('assets/home-light2.png')),
-              const SizedBox(height: 20),
-              Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Learn english in 30 minute a day',
-                      style: textTheme.displayMedium?.copyWith(
-                        color: Colors.black,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      "Let's start studying!",
-                      style: textTheme.titleSmall?.copyWith(
-                        color: Colors.black,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 20),
-              SizedBox(
-                width: 360,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Navigate to learning screen
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 20,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: Text(
-                    'Start learning',
-                    style: textTheme.labelLarge?.copyWith(color: Colors.white),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Already have an account? ',
-                    style: textTheme.bodySmall?.copyWith(color: Colors.black),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      // TODO: dodaj nawigację do ekranu logowania
-                    },
-                    child: Text(
-                      'Log in',
-                      style: textTheme.bodySmall?.copyWith(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+      routes: {
+        '/': (context) => const HomePage(),
+        '/signin': (context) => const LoginPage(),
+        '/signup': (context) => const Text("sdbgd"),
+      },
+      // home: const HomePage(),
     );
   }
 }
