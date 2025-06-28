@@ -1,7 +1,34 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  final VoidCallback toggleTheme;
+
+  const LoginPage({super.key, required this.toggleTheme});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  void _handleContinue() {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    debugPrint('Email: $email');
+    debugPrint('Password: $password');
+
+    // Tu wklej swoją logikę logowania albo przenieś do serwisu
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +58,7 @@ class LoginPage extends StatelessWidget {
                           ),
                           IconButton(
                             icon: const Icon(Icons.brightness_2),
-                            onPressed: () {},
+                            onPressed: widget.toggleTheme,
                           ),
                         ],
                       ),
@@ -67,11 +94,14 @@ class LoginPage extends StatelessWidget {
                             ],
                           ),
                           TextField(
+                            controller: _emailController,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: colorScheme.surface,
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
+                                ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedBorder: OutlineInputBorder(
@@ -103,12 +133,15 @@ class LoginPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           TextField(
+                            controller: _passwordController,
                             obscureText: true,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: colorScheme.surface,
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
+                                ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedBorder: OutlineInputBorder(
@@ -135,7 +168,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: _handleContinue,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: colorScheme.primary,
                           foregroundColor: colorScheme.onPrimary,

@@ -5,6 +5,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
@@ -17,7 +18,9 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 40),
               Text(
                 'Edumate',
-                style: textTheme.displaySmall?.copyWith(color: Colors.black),
+                style: textTheme.displaySmall?.copyWith(
+                  color: colorScheme.onBackground,
+                ),
               ),
               Center(child: Image.asset('assets/home-light2.png')),
               const SizedBox(height: 20),
@@ -28,7 +31,7 @@ class HomePage extends StatelessWidget {
                     Text(
                       'Learn english\nin in 30 minute a day',
                       style: textTheme.displayMedium?.copyWith(
-                        color: Colors.black,
+                        color: colorScheme.onBackground,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -72,7 +75,9 @@ class HomePage extends StatelessWidget {
                 children: [
                   Text(
                     'Already have an account? ',
-                    style: textTheme.bodyMedium?.copyWith(color: Colors.black),
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onBackground,
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -84,7 +89,7 @@ class HomePage extends StatelessWidget {
                     child: Text(
                       'Log in',
                       style: textTheme.bodyMedium?.copyWith(
-                        color: Colors.blue,
+                        color: colorScheme.primary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

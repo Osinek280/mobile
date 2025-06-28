@@ -1,5 +1,5 @@
 import 'package:edumate/pages/home.dart';
-import 'package:edumate/pages/login.dart';
+import 'package:edumate/pages/huj.dart';
 import 'package:flutter/material.dart';
 
 const _fontFamily = 'SF Pro Text'; // dodaj do pubspec.yaml i assets/fonts
@@ -140,7 +140,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -151,7 +150,7 @@ class MyApp extends StatelessWidget {
         textTheme: customTextTheme,
         // useMaterial3: true,
       ),
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       theme: lightTheme.copyWith(
         // primarySwatch: Colors.blue,
         textTheme: customTextTheme,
@@ -174,7 +173,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => const HomePage(),
-        '/signin': (context) => const LoginPage(),
+        '/signin': (context) => LoginPage(),
         '/signup': (context) => const Text("sdbgd"),
       },
       // home: const HomePage(),
